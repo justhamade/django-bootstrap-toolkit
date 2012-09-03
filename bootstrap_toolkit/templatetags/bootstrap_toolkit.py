@@ -29,6 +29,27 @@ BOOTSTRAP_CSS_URL = getattr(settings, 'BOOTSTRAP_CSS_URL',
 register = template.Library()
 
 @register.simple_tag
+def bootstrap_assets_url():
+    """
+    URL to Bootstrap Assets 
+    """
+    return BOOTSTRAP_BASE_URL
+
+@register.simple_tag
+def bootstrap_stylesheet_base_url(name):
+    """
+    URL to Bootstrap Stylesheet (CSS)
+    """
+    return BOOTSTRAP_CSS_BASE_URL + name
+
+@register.simple_tag
+def bootstrap_stylesheet_base_tag(name):
+    """
+    HTML tag to insert Bootstrap stylesheet
+    """
+    return u'<link rel="stylesheet" href="%s">' % bootstrap_stylesheet_base_url(name)
+
+@register.simple_tag
 def bootstrap_stylesheet_url():
     """
     URL to Bootstrap Stylesheet (CSS)
@@ -41,6 +62,24 @@ def bootstrap_stylesheet_tag():
     HTML tag to insert Bootstrap stylesheet
     """
     return u'<link rel="stylesheet" href="%s">' % bootstrap_stylesheet_url()
+
+@register.simple_tag
+def bootstrap_javascript_base_url(name):
+    """
+    URL to Bootstrap javascript file
+    """
+    if BOOTSTRAP_JS_URL:
+        return BOOTSTRAP_JS_URL
+    return BOOTSTRAP_JS_BASE_URL + name
+
+
+@register.simple_tag
+def bootstrap_javascript_base_tag(name):
+    """
+    HTML tag to insert bootstrap_toolkit javascript file
+    """
+
+    return u'<script src="%s"></script>' % bootstrap_javascript_base_url(name)
 
 @register.simple_tag
 def bootstrap_javascript_url(name):
